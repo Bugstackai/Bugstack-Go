@@ -56,7 +56,9 @@ func CaptureError(err error, opts ...CaptureOption) bool {
 	if c == nil {
 		return false
 	}
-	return c.CaptureError(err, opts...)
+	// Call the unexported helper directly (not c.CaptureError) so the reported
+	// location is the application's call site, not this function.
+	return c.captureError(err, opts...)
 }
 
 // CaptureMessage captures a message string as an event.
@@ -68,7 +70,8 @@ func CaptureMessage(msg string, opts ...CaptureOption) bool {
 	if c == nil {
 		return false
 	}
-	return c.CaptureMessage(msg, opts...)
+	// See CaptureError: call the helper directly so the caller's location is reported.
+	return c.captureMessage(msg, opts...)
 }
 
 // Recover captures a panic value. Call this in a deferred function.
