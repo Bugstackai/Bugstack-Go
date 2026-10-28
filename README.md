@@ -1,6 +1,6 @@
 # bugstack-go
 
-Official Go SDK for [BugStack](https://bugstack.dev) — capture, report, and auto-fix production errors.
+Official Go SDK for [bugstack](https://bugstack.ai) — capture, report, and auto-fix production errors.
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/MasonBachmann7/bugstack-go.svg)](https://pkg.go.dev/github.com/MasonBachmann7/bugstack-go)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
