@@ -35,7 +35,7 @@ func TestInitSetsDefaults(t *testing.T) {
 	})
 
 	c := GetClient()
-	if c.config.Endpoint != "https://api.bugstack.dev/api/capture" {
+	if c.config.Endpoint != "https://dashboard.bugstack.ai/api/ingest/sdk" {
 		t.Errorf("expected default endpoint, got %s", c.config.Endpoint)
 	}
 	if c.config.Environment != "production" {

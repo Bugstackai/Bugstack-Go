@@ -6,7 +6,7 @@ type Config struct {
 	APIKey string
 
 	// Endpoint is the BugStack API endpoint.
-	// Default: "https://api.bugstack.dev/api/capture"
+	// Default: "https://dashboard.bugstack.ai/api/ingest/sdk"
 	Endpoint string
 
 	// ProjectID is an optional project identifier.
@@ -52,7 +52,7 @@ func Bool(v bool) *bool { return &v }
 
 func (c *Config) setDefaults() {
 	if c.Endpoint == "" {
-		c.Endpoint = "https://api.bugstack.dev/api/capture"
+		c.Endpoint = "https://dashboard.bugstack.ai/api/ingest/sdk"
 	}
 	if c.Environment == "" {
 		c.Environment = "production"
