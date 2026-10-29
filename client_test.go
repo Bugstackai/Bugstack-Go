@@ -79,14 +79,18 @@ func TestClientDeduplication(t *testing.T) {
 	c := newTestClient()
 	defer c.Shutdown()
 
+	// The fingerprint includes the line an error is captured on, so the
+	// duplicate must come from the same call site.
 	err := errors.New("dedup error")
-	r1 := c.CaptureError(err)
-	r2 := c.CaptureError(err)
+	var results []bool
+	for i := 0; i < 2; i++ {
+		results = append(results, c.CaptureError(err))
+	}
 
-	if !r1 {
+	if !results[0] {
 		t.Error("expected first capture to succeed")
 	}
-	if r2 {
+	if results[1] {
 		t.Error("expected second capture to be deduplicated")
 	}
 }
@@ -110,7 +114,9 @@ func TestClientIgnoredNonMatch(t *testing.T) {
 	})
 	defer c.Shutdown()
 
-	err := errors.New("unexpected error")
+	// IgnoredErrors matches substrings, so the message must not contain
+	// "expected" at all ("unexpected" would).
+	err := errors.New("connection refused")
 	result := c.CaptureError(err)
 	if !result {
 		t.Error("expected error to NOT be ignored")

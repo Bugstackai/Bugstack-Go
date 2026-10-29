@@ -68,12 +68,12 @@ func (e *Event) toPayload(cfg Config) map[string]any {
 			"exceptionType": e.ExceptionType,
 		},
 		"environment": map[string]any{
-			"language":        e.Environment.Language,
-			"languageVersion": e.Environment.LanguageVersion,
-			"framework":       e.Environment.Framework,
+			"language":         e.Environment.Language,
+			"languageVersion":  e.Environment.LanguageVersion,
+			"framework":        e.Environment.Framework,
 			"frameworkVersion": e.Environment.FrameworkVersion,
-			"os":              e.Environment.OS,
-			"sdkVersion":      e.Environment.SDKVersion,
+			"os":               e.Environment.OS,
+			"sdkVersion":       e.Environment.SDKVersion,
 		},
 		"timestamp": e.Timestamp.UTC().Format(time.RFC3339),
 	}
