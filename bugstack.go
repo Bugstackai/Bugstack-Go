@@ -1,5 +1,6 @@
-// Package bugstack provides the official Go SDK for BugStack —
-// capture, report, and auto-fix production errors.
+// Package bugstack is the bugstack SDK for Go. It reports panics and errors
+// from net/http, Gin and Echo servers to bugstack, autonomous software
+// maintenance.
 //
 // Usage:
 //

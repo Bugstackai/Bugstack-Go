@@ -1,6 +1,8 @@
 # bugstack-go
 
-Official Go SDK for [bugstack](https://bugstack.ai) — capture, report, and auto-fix production errors.
+The [bugstack](https://bugstack.ai) SDK for Go: net/http, Gin and Echo.
+
+bugstack is autonomous software maintenance. It watches your app and your repository, fixes what breaks, and sends every change as a pull request you control. This SDK is how your server tells bugstack about a panic or an error.
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/MasonBachmann7/bugstack-go.svg)](https://pkg.go.dev/github.com/MasonBachmann7/bugstack-go)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -79,7 +81,7 @@ e.Use(echo.MiddlewareFunc(middleware.EchoRecover()))
 bugstack.Init(bugstack.Config{
     APIKey:              "bs_live_...",       // Required
     Environment:         "production",       // Default: "production"
-    AutoFix:             true,               // Enable AI-powered auto-fix
+    AutoFix:             true,               // Let bugstack open a fix for errors this SDK reports
     Debug:               false,              // Log SDK activity
     DryRun:              false,              // Log without sending
     Enabled:             true,               // Kill switch
