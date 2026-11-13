@@ -47,6 +47,24 @@ func NewClient(cfg Config) *Client {
 // CaptureError captures an error and sends it to BugStack.
 // Returns true if the error was accepted.
 func (c *Client) CaptureError(err error, opts ...CaptureOption) bool {
+	return c.captureError(err, opts...)
+}
+
+// CaptureMessage captures a message string as an event.
+func (c *Client) CaptureMessage(msg string, opts ...CaptureOption) bool {
+	return c.captureMessage(msg, opts...)
+}
+
+// callerSkip is how far extractErrorLocation must look up the stack to reach
+// the code that called a public capture function: extractErrorLocation,
+// doCapture, captureError/captureMessage, then the public entry point
+// (Client.CaptureError or the package-level CaptureError). Every public entry
+// point calls captureError/captureMessage directly, so the depth is the same
+// whichever one the application used.
+const callerSkip = 4
+
+// captureError must only be called directly by a public entry point — see callerSkip.
+func (c *Client) captureError(err error, opts ...CaptureOption) bool {
 	if err == nil {
 		return false
 	}
@@ -57,18 +75,18 @@ func (c *Client) CaptureError(err error, opts ...CaptureOption) bool {
 		}
 	}()
 
-	return c.doCapture(err.Error(), "error", 3, opts...)
+	return c.doCapture(err.Error(), "error", callerSkip, opts...)
 }
 
-// CaptureMessage captures a message string as an event.
-func (c *Client) CaptureMessage(msg string, opts ...CaptureOption) bool {
+// captureMessage must only be called directly by a public entry point — see callerSkip.
+func (c *Client) captureMessage(msg string, opts ...CaptureOption) bool {
 	defer func() {
 		if r := recover(); r != nil && c.config.Debug {
 			log.Printf("[BugStack] Panic during capture: %v", r)
 		}
 	}()
 
-	return c.doCapture(msg, "message", 3, opts...)
+	return c.doCapture(msg, "message", callerSkip, opts...)
 }
 
 // RecoverPanic captures a panic value. Used internally by Recover().
