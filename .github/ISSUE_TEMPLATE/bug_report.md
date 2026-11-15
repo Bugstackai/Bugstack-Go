@@ -1,6 +1,6 @@
 ---
 name: Bug Report
-about: Report a bug in the BugStack Go SDK
+about: Report a bug in the Bugstack Go SDK
 title: "[Bug] "
 labels: bug
 ---
